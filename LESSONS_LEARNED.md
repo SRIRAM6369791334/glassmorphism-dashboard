@@ -21,3 +21,13 @@ Purpose: record actual mistakes or failed approaches, root causes, solutions, an
 **Solution:** Add a noninteractive, overscanned wallpaper layer clipped within the card, using the same SVG, dark tint, and 28 px CSS filter blur. Keep native backdrop-filter and the opaque unsupported-feature fallback. Final desktop images were inspected in Chromium, Firefox, and WebKit and show frost.
 
 **Prevention:** Validate visual effects through cross-engine screenshots as well as interactions and CSS feature queries. Rerun affected checks after the rendering fix.
+
+## 2026-10-08 — Documentation synchronization during rapid bugfix turns
+
+**Issue:** During quick iterative bugfixes (removing the feature showcase section and eliminating the desktop side scrollbar), code changes and git commits were pushed, but repository `.md` files (`CHANGELOG.md`, `AI_CONTEXT.md`, `TODO.md`, `DECISIONS.md`) were temporarily omitted.
+
+**Root cause:** Prioritizing immediate verification and green test suites over documentation updates created context rot and violated the core working agreement (`AGENTS.md`).
+
+**Solution:** Treat documentation updates as an atomic part of every feature or bugfix lifecycle. Update `AI_CONTEXT.md`, `CHANGELOG.md`, `TODO.md`, `DECISIONS.md`, and `project_state.md` alongside code changes.
+
+**Prevention:** Establish a strict step order: Requirement → Architecture Decision → Implementation → Test Verification → Documentation Update → Git Commit & Push. Never defer documentation across turns.
