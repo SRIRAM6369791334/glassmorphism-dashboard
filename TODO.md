@@ -19,15 +19,15 @@ Purpose: track concrete incomplete tasks. Longer-term possibilities belong in [R
 
 ## DesignPass.dev Components Integration
 
-- [ ] Initialize `components.json` and install required dependencies (`html2canvas-pro`, Tailwind CSS tooling).
-- [ ] Install `IsometricButton` under `src/components/ui/button/IsometricButton/` (`IsometricButton.tsx`, `IsometricButton.css`, `index.ts`).
-- [ ] Install `Magnet` effect under `src/components/effects/Magnet/` (`Magnet.tsx`, `index.ts`).
-- [ ] Install `LiquidGlass` effect under `src/components/effects/LiquidGlass/` (`LiquidGlass.tsx`, `index.ts`).
-- [ ] Install `SpringSelect` control under `src/components/ui/select/SpringSelect/` (`SpringSelect.tsx`, `index.ts`).
-- [ ] Install `SpringSlider` control under `src/components/ui/slider/SpringSlider/` (`SpringSlider.tsx`, `index.ts`).
-- [ ] Install `SpringAccordion` control under `src/components/ui/accordion/SpringAccordion/` (`SpringAccordion.tsx`, `index.ts`).
-- [ ] Create minimal usage examples for all 6 components (`src/components/examples/` or dedicated preview).
-- [ ] Run typecheck (`npm run typecheck`), build (`npm run build`), and test suite (`npx playwright test`).
+- [x] Initialize `components.json` and install required dependencies (`html2canvas-pro`, Tailwind CSS tooling).
+- [x] Install `IsometricButton` under `src/components/ui/button/IsometricButton/` (`IsometricButton.tsx`, `IsometricButton.css`, `index.ts`).
+- [x] Install `Magnet` effect under `src/components/effects/Magnet/` (`Magnet.tsx`, `index.ts`).
+- [x] Install `LiquidGlass` effect under `src/components/effects/LiquidGlass/` (`LiquidGlass.tsx`, `index.ts`).
+- [x] Install `SpringSelect` control under `src/components/ui/select/SpringSelect/` (`SpringSelect.tsx`, `index.ts`).
+- [x] Install `SpringSlider` control under `src/components/ui/slider/SpringSlider/` (`SpringSlider.tsx`, `index.ts`).
+- [x] Install `SpringAccordion` control under `src/components/ui/accordion/SpringAccordion/` (`SpringAccordion.tsx`, `index.ts`).
+- [x] Create minimal usage examples for all 6 components (`src/components/examples/` or dedicated preview).
+- [x] Run typecheck (`npm run typecheck`), build (`npm run build`), and test suite (`npx playwright test`).
 - [ ] Commit and push to GitHub repository.
 
 ## Accepted limitations

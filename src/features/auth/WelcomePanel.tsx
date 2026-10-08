@@ -8,8 +8,8 @@ export function WelcomePanel({ mode, onSwitch }: { mode: AuthMode; onSwitch: () 
   return (
     <aside className={styles.welcome} aria-label={isLogin ? 'Create an account' : 'Welcome back'}>
       <div>
-        <h2>{isLogin ? <>HELLO,<br />FRIEND!</> : <>WELCOME<br />BACK!</>}</h2>
-        <p>{isLogin ? <>Enter your personal details<br />and start your journey<br />with us.</> : <>Already a Member? Please Login<br />with your credentials.</>}</p>
+        <h2>{isLogin ? <>HELLO, FRIEND!</> : <>WELCOME BACK!</>}</h2>
+        <p>{isLogin ? <>Enter your personal details and start your journey<br />with us.</> : <>Already a Member? Please Login with your credentials.</>}</p>
         <Button variant="secondary" onClick={onSwitch}>
           {isLogin ? 'Create Account' : 'Sign in'}<Icon name="arrow" />
         </Button>

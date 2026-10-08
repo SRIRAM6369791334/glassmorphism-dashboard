@@ -51,8 +51,8 @@ Active Branch: `main`
 
 ## 4. Immediate Roadmap & Trajectory
 1. [x] Documentation sync across all core `.md` files (`AI_CONTEXT.md`, `CHANGELOG.md`, `TODO.md`, `DECISIONS.md`, `LESSONS_LEARNED.md`, `project_state.md`).
-2. [ ] Configure `components.json` and install required packages (`html2canvas-pro`, Tailwind CSS tooling).
-3. [ ] Scaffold and populate dedicated directories for all 6 DesignPass components.
-4. [ ] Build standalone minimal usage examples for developer preview.
-5. [ ] Run lint, typecheck, build, and test validation.
+2. [x] Configure `components.json` and install required packages (`html2canvas-pro`, Tailwind CSS tooling).
+3. [x] Scaffold and populate dedicated directories for all 6 DesignPass components.
+4. [x] Build standalone minimal usage examples for developer preview.
+5. [x] Run lint, typecheck, build, and test validation (28/28 tests passing).
 6. [ ] Git commit and push to remote.

@@ -3,7 +3,7 @@ import { CursorProvider } from '../context/CursorContext'
 
 export function App() {
   return (
-    <CursorProvider defaultCursor="particles" defaultColor="#a855f7">
+    <CursorProvider defaultCursor="particles" defaultColor="#7526bf">
       <AuthScreen />
     </CursorProvider>
   )
