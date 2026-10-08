@@ -4,19 +4,46 @@
   align-items: center;
   gap: var(--space-3, 12px);
   min-height: 48px;
-  border-bottom: 1px solid rgb(235 235 241 / 22%);
   color: var(--color-muted, #94a3b8);
-  transition: border-color 200ms ease, box-shadow 200ms ease;
+  transition: border-color 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
 }
 
-.field:focus-within {
+/* Box Variant (Unified Glass Capsule with Glowing Border) */
+.box {
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(235, 235, 241, 0.16);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+}
+
+.box:hover {
+  border-color: rgba(235, 235, 241, 0.32);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.box:focus-within {
   border-color: #a855f7;
-  box-shadow: 0 1px 0 0 #a855f7, 0 4px 16px rgb(168 85 247 / 22%);
+  background: rgba(168, 85, 247, 0.08);
+  box-shadow:
+    0 0 0 1px #a855f7,
+    0 0 20px rgba(168, 85, 247, 0.38),
+    inset 0 0 12px rgba(168, 85, 247, 0.12);
+}
+
+/* Underline Variant */
+.underline {
+  border-bottom: 1px solid rgb(235 235 241 / 22%);
+}
+
+.underline:focus-within {
+  border-color: #a855f7;
+  box-shadow: 0 1px 0 0 #a855f7, 0 4px 16px rgb(168 85 247 / 35%);
 }
 
 .field:focus-within .fieldIcon {
   color: #fff;
-  filter: drop-shadow(0 0 6px rgb(168 85 247 / 65%));
+  filter: drop-shadow(0 0 6px rgb(168 85 247 / 75%));
 }
 
 .fieldIcon {
@@ -34,17 +61,19 @@
   padding: 0;
   border: 0;
   border-radius: 0;
+  outline: none;
   background: transparent;
   color: var(--color-primary, #ffffff);
   font-size: 14px;
   line-height: 1.4;
   letter-spacing: 0.4px;
-  caret-color: white;
+  caret-color: #a855f7;
 }
 
+.field input:focus,
 .field input:focus-visible {
-  outline-offset: 2px;
-  border-radius: 2px;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .field input::placeholder {
@@ -103,6 +132,7 @@
 .floatingField input {
   width: 100%;
   border: 0;
+  outline: none;
   background: transparent;
   color: white;
   font-size: 14px;
