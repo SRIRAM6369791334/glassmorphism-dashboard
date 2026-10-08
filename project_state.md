@@ -21,38 +21,31 @@ Active Branch: `main`
 2. **Dynamic Cursor System**:
    - `CursorProvider` & `CursorContext`: Global cursor abstraction.
    - `ParticlesCursor`: 1000-particle canvas trail with momentum physics and automatic quiescent pause.
-3. **DesignPass.dev Spring Physics Suite (Installing)**:
+3. **DesignPass.dev Spring Physics Suite**:
    - `src/components/ui/button/IsometricButton/`
    - `src/components/ui/select/SpringSelect/`
    - `src/components/ui/slider/SpringSlider/`
    - `src/components/ui/accordion/SpringAccordion/`
    - `src/components/effects/LiquidGlass/`
    - `src/components/effects/Magnet/`
+4. **Dedicated Component Gallery & Extensible Registry**:
+   - `src/pages/ComponentsGalleryPage.tsx`: Interactive gallery for all 19 components with real-time search, category filters, live previews, and code copying.
+   - `src/registry/components.tsx`: Central extensible registry for auto-registering any future components.
+   - `#/components` route and floating switcher pill on `AuthScreen`.
 
 ---
 
 ## 3. Verification Metrics & Receipts
 - **Lint**: 0 warnings, 0 errors (`npm run lint`).
-- **Build**: Vite production build succeeded in ~310ms (JS: 234.12 kB gzip: 73.62 kB; CSS: 14.24 kB).
+- **Build**: Vite production build succeeded in ~760ms (JS: 316.55 kB gzip: 97.60 kB; CSS: 64.45 kB).
 - **Playwright Tests**: 28 passed across Chromium and Firefox.
-- **Desktop Scrollbar Metric**:
-  ```json
-  {
-    "clientHeight": 900,
-    "scrollHeight": 900,
-    "hasVerticalScroll": false,
-    "clientWidth": 1440,
-    "scrollWidth": 1440,
-    "hasHorizontalScroll": false
-  }
-  ```
 
 ---
 
 ## 4. Immediate Roadmap & Trajectory
-1. [x] Documentation sync across all core `.md` files (`AI_CONTEXT.md`, `CHANGELOG.md`, `TODO.md`, `DECISIONS.md`, `LESSONS_LEARNED.md`, `project_state.md`).
-2. [x] Configure `components.json` and install required packages (`html2canvas-pro`, Tailwind CSS tooling).
-3. [x] Scaffold and populate dedicated directories for all 6 DesignPass components.
-4. [x] Build standalone minimal usage examples for developer preview.
-5. [x] Run lint, typecheck, build, and test validation (28/28 tests passing).
-6. [ ] Git commit and push to remote.
+1. [x] Documentation sync across all core `.md` files.
+2. [x] Configure `components.json` and install dependencies.
+3. [x] Scaffold and populate dedicated directories for all DesignPass components.
+4. [x] Build extensible Component Registry (`src/registry/components.tsx`) and dedicated `ComponentsGalleryPage` (`src/pages/ComponentsGalleryPage.tsx`).
+5. [x] Run lint, typecheck, build, and test validation.
+6. [x] Connect hash routing (`#/components`) and floating navigation switcher.

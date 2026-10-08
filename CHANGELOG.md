@@ -16,6 +16,9 @@
 - Interactive specular mouse-tracking glow border on the main glassmorphism authentication card.
 - Animated focus states with glowing accent underlines and micro-interactions on button click and password reveal controls.
 - DesignPass.dev spring-physics & 3D components integration: `IsometricButton`, `LiquidGlass`, `Magnet`, `SpringSelect`, `SpringSlider`, and `SpringAccordion`.
+- Dedicated Component Gallery page (`src/pages/ComponentsGalleryPage.tsx`) showcasing all 19 components with real-time search, category filtering, live interactive previews, and copyable code snippets.
+- Centralized extensible Component Registry (`src/registry/components.tsx` and `src/registry/README.md`) enabling automatic inclusion of any future components.
+- Hash-based navigation (`#/components` and `#`) with a floating glass switcher pill on the authentication screen and top navbar return controls.
 
 ### Refined
 

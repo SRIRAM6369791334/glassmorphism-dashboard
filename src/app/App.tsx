@@ -1,69 +1,49 @@
 import { useState, useEffect } from 'react'
 import { AuthScreen } from '../features/auth/AuthScreen'
 import { CursorProvider } from '../context/CursorContext'
-import { DesignPassExamples } from '../components/examples'
+import { ComponentsGalleryPage } from '../pages/ComponentsGalleryPage'
+
+function isGalleryRoute(): boolean {
+  if (typeof window === 'undefined') return false
+  const hash = window.location.hash.toLowerCase()
+  const search = window.location.search.toLowerCase()
+  return (
+    hash.includes('components') ||
+    hash.includes('gallery') ||
+    hash.includes('showcase') ||
+    hash.includes('examples') ||
+    search.includes('view=components') ||
+    search.includes('view=gallery') ||
+    search.includes('view=examples')
+  )
+}
 
 export function App() {
-  const [view, setView] = useState<'auth' | 'examples'>(() => {
-    if (typeof window !== 'undefined') {
-      const hash = window.location.hash
-      const search = window.location.search
-      if (hash === '#examples' || search.includes('view=examples')) {
-        return 'examples'
-      }
-    }
-    return 'auth'
+  const [view, setView] = useState<'auth' | 'components'>(() => {
+    return isGalleryRoute() ? 'components' : 'auth'
   })
 
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash
-      const search = window.location.search
-      if (hash === '#examples' || search.includes('view=examples')) {
-        setView('examples')
-      } else {
-        setView('auth')
-      }
+    const handleLocationChange = () => {
+      setView(isGalleryRoute() ? 'components' : 'auth')
     }
-    window.addEventListener('hashchange', handleHashChange)
-    return () => window.removeEventListener('hashchange', handleHashChange)
+    window.addEventListener('hashchange', handleLocationChange)
+    window.addEventListener('popstate', handleLocationChange)
+    return () => {
+      window.removeEventListener('hashchange', handleLocationChange)
+      window.removeEventListener('popstate', handleLocationChange)
+    }
   }, [])
 
   return (
     <CursorProvider defaultCursor="particles" defaultColor="#7526bf">
-      {view === 'examples' ? (
-        <div style={{ minHeight: '100vh', background: 'radial-gradient(ellipse at top, #181124 0%, #09060f 100%)', padding: '2rem 1rem' }}>
-          <div style={{ maxWidth: '840px', margin: '0 auto', marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <a
-              href="#"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                color: '#c084fc',
-                textDecoration: 'none',
-                fontFamily: 'monospace',
-                fontSize: '0.875rem',
-                padding: '0.5rem 1rem',
-                borderRadius: '9999px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                backdropFilter: 'blur(8px)',
-              }}
-            >
-              ← Back to Auth Screen
-            </a>
-            <span style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', fontSize: '0.8rem' }}>
-              DesignPass.dev Components Showcase
-            </span>
-          </div>
-          <DesignPassExamples />
-        </div>
+      {view === 'components' ? (
+        <ComponentsGalleryPage />
       ) : (
         <>
           <AuthScreen />
           <a
-            href="#examples"
+            href="#/components"
             style={{
               position: 'fixed',
               bottom: '1.25rem',
@@ -76,20 +56,20 @@ export function App() {
               textDecoration: 'none',
               fontFamily: 'monospace',
               fontSize: '0.8rem',
-              padding: '0.5rem 1rem',
+              fontWeight: 500,
+              padding: '0.5rem 1.15rem',
               borderRadius: '9999px',
-              background: 'rgba(168, 85, 247, 0.25)',
-              border: '1px solid rgba(168, 85, 247, 0.5)',
-              backdropFilter: 'blur(12px)',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+              background: 'rgba(168, 85, 247, 0.28)',
+              border: '1px solid rgba(168, 85, 247, 0.55)',
+              backdropFilter: 'blur(16px)',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.45)',
               transition: 'all 0.2s ease',
             }}
           >
-            ✨ Components Showcase →
+            <span>🎛️ Components Gallery (19) →</span>
           </a>
         </>
       )}
     </CursorProvider>
   )
 }
-
