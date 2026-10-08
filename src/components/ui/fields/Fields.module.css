@@ -1,0 +1,147 @@
+.field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 12px);
+  min-height: 48px;
+  border-bottom: 1px solid rgb(235 235 241 / 22%);
+  color: var(--color-muted, #94a3b8);
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.field:focus-within {
+  border-color: #a855f7;
+  box-shadow: 0 1px 0 0 #a855f7, 0 4px 16px rgb(168 85 247 / 22%);
+}
+
+.field:focus-within .fieldIcon {
+  color: #fff;
+  filter: drop-shadow(0 0 6px rgb(168 85 247 / 65%));
+}
+
+.fieldIcon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: var(--color-muted, #94a3b8);
+  transition: color 200ms ease, filter 200ms ease;
+}
+
+.field input {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-primary, #ffffff);
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0.4px;
+  caret-color: white;
+}
+
+.field input:focus-visible {
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.field input::placeholder {
+  color: var(--color-muted, #94a3b8);
+  opacity: 1;
+}
+
+.field input:-webkit-autofill {
+  -webkit-text-fill-color: var(--color-primary, #ffffff);
+  box-shadow: inset 0 0 0 100px #29292e;
+}
+
+.eye {
+  display: grid;
+  flex: 0 0 36px;
+  place-items: center;
+  width: 36px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--color-muted, #94a3b8);
+  cursor: pointer;
+  transition: color 150ms ease, transform 150ms ease;
+}
+
+.eye:focus-visible {
+  outline-offset: -3px;
+}
+
+.eye:hover {
+  color: white;
+  transform: scale(1.08);
+}
+
+/* Floating Label Field Variant */
+.floatingField {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  transition: all 200ms ease;
+}
+
+.floatingField:focus-within {
+  border-color: #a855f7;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.25);
+}
+
+.floatingField input {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: white;
+  font-size: 14px;
+  padding-top: 14px;
+}
+
+.floatingField label {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-size: 13px;
+  color: var(--color-muted, #94a3b8);
+  pointer-events: none;
+  transition: all 180ms ease;
+}
+
+.floatingField:focus-within label,
+.floatingField input:not(:placeholder-shown) + label {
+  top: 4px;
+  font-size: 10px;
+  color: #c084fc;
+}
+
+@media (max-width: 767px) {
+  .field input {
+    font-size: 16px;
+  }
+  .eye {
+    flex-basis: 44px;
+    width: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .field,
+  .eye,
+  .floatingField,
+  .floatingField label {
+    transition: none;
+    transform: none !important;
+  }
+}
