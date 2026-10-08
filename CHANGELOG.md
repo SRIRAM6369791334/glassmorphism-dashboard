@@ -19,6 +19,7 @@
 - Dedicated Component Gallery page (`src/pages/ComponentsGalleryPage.tsx`) showcasing all 19 components with real-time search, category filtering, live interactive previews, and copyable code snippets.
 - Centralized extensible Component Registry (`src/registry/components.tsx` and `src/registry/README.md`) enabling automatic inclusion of any future components.
 - Hash-based navigation (`#/components` and `#`) with a floating glass switcher pill on the authentication screen and top navbar return controls.
+- Upgraded all core authentication action buttons (`Login`, `Create Account`, `Sign in`, and `Sign Up`) to 3D `IsometricButton` with responsive neon glow and spring hover physics.
 
 ### Refined
 

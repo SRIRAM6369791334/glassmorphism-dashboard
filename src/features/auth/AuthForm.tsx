@@ -1,5 +1,6 @@
 import type { FormEvent, Ref } from 'react'
 import { Button } from '../../components/ui/Button'
+import { IsometricButton } from '@/components/ui/button/IsometricButton'
 import { Field, PasswordField } from '../../components/ui/Field'
 import type { AuthMode, AuthSubmitHandlers } from './types'
 import styles from './AuthScreen.module.css'
@@ -34,7 +35,15 @@ export function AuthForm({ mode, headingRef, onSwitch, onRecover, onLogin, onReg
           </>}
           <PasswordField label={isLogin ? 'Password' : 'Create Password'} name="password" autoComplete={isLogin ? 'current-password' : 'new-password'} />
         </div>
-        <Button type="submit" className={styles.submit}>{isLogin ? 'Login' : 'Sign Up'}</Button>
+        <div style={{ marginTop: '22px', display: 'flex', justifyContent: 'center' }}>
+          <IsometricButton
+            type="submit"
+            wrapperClassName="w-44 h-11"
+            settings={{ glowColor: '#a855f7', textColor: '#ffffff' }}
+          >
+            {isLogin ? 'Login' : 'Sign Up'}
+          </IsometricButton>
+        </div>
         <div className={styles.formFooter}>
           <p>{isLogin ? "Don't have an account?" : 'Already a Member?'}{' '}
             <Button variant="text" onClick={onSwitch}>{isLogin ? 'Sign Up' : 'Login'}</Button>

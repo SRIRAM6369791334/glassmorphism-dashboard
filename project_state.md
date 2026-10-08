@@ -32,6 +32,9 @@ Active Branch: `main`
    - `src/pages/ComponentsGalleryPage.tsx`: Interactive gallery for all 19 components with real-time search, category filters, live previews, and code copying.
    - `src/registry/components.tsx`: Central extensible registry for auto-registering any future components.
    - `#/components` route and floating switcher pill on `AuthScreen`.
+5. **IsometricButton Auth Integration**:
+   - `Login` and `Sign Up` submit buttons in `AuthForm.tsx` powered by 3D `IsometricButton`.
+   - `Create Account` and `Sign in` mode-switching buttons in `WelcomePanel.tsx` powered by 3D `IsometricButton`.
 
 ---
 

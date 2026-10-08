@@ -190,6 +190,7 @@ export function IsometricButton({
   children,
   wrapperClassName = '',
   settings,
+  className = '',
   ...buttonProps
 }: IsometricButtonProps) {
   return (
@@ -207,7 +208,7 @@ export function IsometricButton({
           <span className="iso-btn-top">{children}</span>
         </span>
       </span>
-      <button {...buttonProps} className="iso-btn-hit">
+      <button {...buttonProps} className={`iso-btn-hit ${className}`.trim()}>
         <span className="iso-btn-sr-only">{children}</span>
       </button>
     </span>
