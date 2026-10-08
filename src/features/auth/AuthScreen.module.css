@@ -3,14 +3,15 @@
   flex-direction: column;
   align-items: center;
   min-height: 100svh;
-  padding: 0 var(--space-8) var(--space-16);
+  padding: 0 var(--space-8);
   background: var(--color-background) url('../../assets/geometric-wallpaper.svg') center / cover no-repeat;
 }
 .authHero {
   display: grid;
   place-items: center;
-  min-height: 100svh;
   width: 100%;
+  margin: auto 0;
+  padding: var(--space-4) 0;
 }
 .card {
   position: relative;
