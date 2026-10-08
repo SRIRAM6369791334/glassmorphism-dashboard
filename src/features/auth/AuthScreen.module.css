@@ -129,77 +129,6 @@
 @keyframes fade-out { to { opacity: 0; } }
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 
-.showcaseSection {
-  width: min(900px, 100%);
-  margin: 0 auto;
-  padding: var(--space-8) 0 var(--space-16);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-4);
-}
-.showcaseHeader {
-  text-align: center;
-  max-width: 620px;
-  margin: 0 auto var(--space-2);
-}
-.showcaseBadge {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 999px;
-  background: rgba(168, 85, 247, 0.12);
-  border: 1px solid rgba(168, 85, 247, 0.3);
-  color: #c084fc;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  margin-bottom: var(--space-3);
-}
-.showcaseTitle {
-  font-size: 26px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-  margin: 0 0 var(--space-2);
-  color: var(--color-primary);
-}
-.showcaseSubtitle {
-  font-size: 14px;
-  color: var(--color-muted);
-  line-height: 1.5;
-  margin: 0;
-}
-.cardHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--space-4);
-}
-.cardIcon {
-  font-size: 22px;
-  line-height: 1;
-}
-.cardTag {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--color-muted);
-}
-.cardTitle {
-  font-size: 18px;
-  font-weight: 600;
-  margin: 0 0 var(--space-2);
-  color: var(--color-primary);
-  letter-spacing: -0.3px;
-}
-.cardDescription {
-  font-size: 13px;
-  color: var(--color-muted);
-  line-height: 1.55;
-  margin: 0;
-}
 
 @media (min-width: 768px) and (max-width: 900px) {
   .form { width: calc(100% - 64px); }
@@ -227,8 +156,6 @@
   .welcome h2 { font-size: 30px; line-height: 1.05; }
   .welcome p { margin: var(--space-3) 0 var(--space-4); }
   .glassLayer { display: none; }
-  .showcaseSection { padding: var(--space-6) 0; }
-  .showcaseTitle { font-size: 22px; }
   .card[data-phase='exiting'] .formColumn, .card[data-phase='exiting'] .welcome { animation-name: fade-out; }
   .card[data-phase='entering'] .formColumn, .card[data-phase='entering'] .welcome { animation-name: fade-in; }
 }
