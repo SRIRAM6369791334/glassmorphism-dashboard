@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "outDir": "artifacts/test-build", "rootDir": "." },
+  "include": ["src/**/*.ts", "test/**/*.ts", "prisma/seed.ts"]
+}

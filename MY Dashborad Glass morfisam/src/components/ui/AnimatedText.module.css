@@ -1,0 +1,109 @@
+.animatedText {
+  display: inline-block;
+  font-family: inherit;
+  transition: opacity 0.3s ease;
+}
+
+/* Gradient Variant */
+.gradient {
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #e9d5ff 25%,
+    #c084fc 50%,
+    #a855f7 75%,
+    #ffffff 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientFlow 6s linear infinite;
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Shimmer Variant */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(168, 85, 247, 0.8) 75%,
+    rgba(255, 255, 255, 0.7) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmerSweep 3.5s ease-in-out infinite;
+}
+
+@keyframes shimmerSweep {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Glow Variant */
+.glow {
+  color: #ffffff;
+  text-shadow:
+    0 0 10px rgba(168, 85, 247, 0.5),
+    0 0 20px rgba(168, 85, 247, 0.3),
+    0 0 30px rgba(168, 85, 247, 0.2);
+  animation: glowPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+  0% {
+    text-shadow:
+      0 0 8px rgba(168, 85, 247, 0.4),
+      0 0 16px rgba(168, 85, 247, 0.2);
+  }
+  100% {
+    text-shadow:
+      0 0 14px rgba(168, 85, 247, 0.8),
+      0 0 28px rgba(168, 85, 247, 0.4),
+      0 0 42px rgba(192, 132, 252, 0.3);
+  }
+}
+
+/* Fade-In Variant */
+.fadeIn {
+  animation: fadeInRise 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInRise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient,
+  .shimmer,
+  .glow,
+  .fadeIn {
+    animation: none;
+    background-size: auto;
+  }
+}

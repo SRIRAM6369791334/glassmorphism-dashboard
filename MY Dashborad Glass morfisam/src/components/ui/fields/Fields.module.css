@@ -1,0 +1,278 @@
+.field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 12px);
+  min-height: 48px;
+  color: var(--color-muted, #94a3b8);
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    background 200ms ease;
+}
+
+/* 3D Glass Box Prism (Tactile 3D Extruded Depth with Neon Reflection) */
+.box {
+  padding: 0 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(235, 235, 241, 0.18);
+  border-top-color: rgba(255, 255, 255, 0.28);
+  border-bottom: 2px solid rgba(18, 14, 26, 0.95);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(20, 16, 28, 0.45) 100%);
+  backdrop-filter: blur(12px);
+  transform: perspective(800px) rotateX(4deg) translateZ(0);
+  transform-origin: center bottom;
+  box-shadow:
+    /* Crisp 3D extruded prism side bevels (thickness) */
+    0 1px 0 #1e1828,
+    0 2px 0 #1a1424,
+    0 3px 0 #16111f,
+    0 4px 0 #120d1a,
+    0 5px 0 #0d0914,
+    /* Soft ambient floor shadow */
+    0 8px 16px -2px rgba(0, 0, 0, 0.5),
+    0 14px 28px -4px rgba(0, 0, 0, 0.35),
+    /* Underside ambient purple neon glow reflection */
+    0 10px 24px -2px rgba(168, 85, 247, 0.2);
+}
+
+.box:hover {
+  border-color: rgba(235, 235, 241, 0.35);
+  border-top-color: rgba(255, 255, 255, 0.45);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(24, 18, 34, 0.5) 100%);
+  transform: perspective(800px) rotateX(2deg) translateY(-2px);
+  box-shadow:
+    0 1px 0 #241d30,
+    0 2px 0 #1f182a,
+    0 3px 0 #1a1424,
+    0 4px 0 #161020,
+    0 5px 0 #120c1a,
+    0 6px 0 #0e0915,
+    0 10px 20px -2px rgba(0, 0, 0, 0.55),
+    0 18px 32px -4px rgba(0, 0, 0, 0.4),
+    0 14px 28px -2px rgba(168, 85, 247, 0.35);
+}
+
+/* Focus-within, Filled (CSS :has), or Filled (data-filled attribute) */
+.box:focus-within,
+.box:has(input:not(:placeholder-shown)),
+.box[data-filled='true'] {
+  border-color: #a855f7;
+  border-top-color: #c084fc;
+  border-bottom-color: #581c87;
+  background: linear-gradient(180deg, rgba(168, 85, 247, 0.12) 0%, rgba(20, 15, 30, 0.65) 100%);
+  transform: perspective(800px) rotateX(0deg) translateY(-1px);
+  box-shadow:
+    /* Inner top highlight glow */
+    inset 0 1px 2px rgba(255, 255, 255, 0.3),
+    inset 0 0 14px rgba(168, 85, 247, 0.2),
+    /* 3D illuminated prism edge */
+    0 1px 0 #6b21a8,
+    0 2px 0 #581c87,
+    0 3px 0 #3b0764,
+    0 4px 0 #2e0854,
+    0 5px 0 #1a0530,
+    /* Radiant 3D floor neon glow cushion */
+    0 0 0 1px #a855f7,
+    0 8px 24px rgba(168, 85, 247, 0.45),
+    0 16px 36px rgba(168, 85, 247, 0.3);
+}
+
+/* Underline Variant */
+.underline {
+  border-bottom: 1px solid rgb(235 235 241 / 22%);
+}
+
+.underline:focus-within,
+.underline:has(input:not(:placeholder-shown)),
+.underline[data-filled='true'] {
+  border-color: #a855f7;
+  box-shadow: 0 1px 0 0 #a855f7, 0 4px 16px rgb(168 85 247 / 35%);
+}
+
+.field:focus-within .fieldIcon,
+.field:has(input:not(:placeholder-shown)) .fieldIcon,
+.field[data-filled='true'] .fieldIcon {
+  color: #fff;
+  filter: drop-shadow(0 0 6px rgb(168 85 247 / 75%));
+}
+
+.fieldIcon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: var(--color-muted, #94a3b8);
+  filter: drop-shadow(0 -1px 0 rgba(0, 0, 0, 0.8)) drop-shadow(0 1px 0 rgba(255, 255, 255, 0.18));
+  transition: color 200ms ease, filter 200ms ease;
+}
+
+.field input {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  background: transparent;
+  color: var(--color-primary, #ffffff);
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0.4px;
+  caret-color: #a855f7;
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.8), 0 1px 1px rgba(255, 255, 255, 0.18);
+}
+
+.field input:focus,
+.field input:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.8), 0 1px 1px rgba(255, 255, 255, 0.25), 0 0 8px rgba(168, 85, 247, 0.4);
+}
+
+.field input::placeholder {
+  color: var(--color-muted, #94a3b8);
+  opacity: 1;
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.7), 0 1px 1px rgba(255, 255, 255, 0.12);
+}
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+}
+
+.shimmerInput::placeholder {
+  color: transparent !important;
+  text-shadow: none !important;
+}
+
+.shimmerPlaceholder {
+  position: absolute;
+  left: 0;
+  pointer-events: none;
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0.4px;
+  user-select: none;
+  opacity: 1;
+  transition: opacity 180ms ease, visibility 180ms ease;
+}
+
+.field:focus-within .shimmerPlaceholder,
+.field:has(input:not(:placeholder-shown)) .shimmerPlaceholder,
+.field[data-filled='true'] .shimmerPlaceholder {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.field input:-webkit-autofill,
+.field input:-webkit-autofill:hover,
+.field input:-webkit-autofill:focus,
+.field input:-webkit-autofill:active,
+.field input:autofill,
+.field input:autofill:hover,
+.field input:autofill:focus,
+.field input:autofill:active {
+  -webkit-text-fill-color: var(--color-primary, #ffffff) !important;
+  caret-color: #a855f7 !important;
+  background-color: transparent !important;
+  box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  transition: background-color 5000000s ease-in-out 0s, color 5000000s ease-in-out 0s !important;
+}
+
+.eye {
+  display: grid;
+  flex: 0 0 36px;
+  place-items: center;
+  width: 36px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--color-muted, #94a3b8);
+  filter: drop-shadow(0 -1px 0 rgba(0, 0, 0, 0.8)) drop-shadow(0 1px 0 rgba(255, 255, 255, 0.18));
+  cursor: pointer;
+  transition: color 150ms ease, transform 150ms ease, filter 150ms ease;
+}
+
+.eye:focus-visible {
+  outline-offset: -3px;
+}
+
+.eye:hover {
+  color: white;
+  transform: scale(1.08);
+}
+
+/* Floating Label Field Variant */
+.floatingField {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  transition: all 200ms ease;
+}
+
+.floatingField:focus-within {
+  border-color: #a855f7;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.25);
+}
+
+.floatingField input {
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: white;
+  font-size: 14px;
+  padding-top: 14px;
+}
+
+.floatingField label {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-size: 13px;
+  color: var(--color-muted, #94a3b8);
+  pointer-events: none;
+  transition: all 180ms ease;
+}
+
+.floatingField:focus-within label,
+.floatingField input:not(:placeholder-shown) + label {
+  top: 4px;
+  font-size: 10px;
+  color: #c084fc;
+}
+
+@media (max-width: 767px) {
+  .field input {
+    font-size: 16px;
+  }
+  .eye {
+    flex-basis: 44px;
+    width: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .field,
+  .eye,
+  .floatingField,
+  .floatingField label {
+    transition: none;
+    transform: none !important;
+  }
+}

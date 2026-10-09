@@ -1,0 +1,34 @@
+# Authentication UI specification
+
+## Current connected behavior ? 2026-10-09
+
+AuthForm retains shared glass primitives and submits email/password or full name/email/password to authApi. Registration opens the reused OTP modal and requires server verification before login. Recovery follows email -> OTP -> reset token -> password update, advancing only on success. Native dialog preserves modal focus and restores the opener. AuthScreen restores sessions and shows sign-out actions at the existing `/` route; public gallery stays unchanged. No fake success, credential browser storage or invented destination. Earlier static-flow descriptions below are historical.
+
+Status: implemented; final cross-browser and visual-refinement verification in progress.
+
+## Login
+
+Initially displayed at `/`. Form on the left, with Login heading, account identity field, password field with visibility control, Login submit button, account-switch link, and Forgot Password action. Right welcome copy is “HELLO, FRIEND!” with “Enter your personal details and start your journey with us.” and “Create Account” action.
+
+## Registration
+
+Form on the right, with Create Account heading, Full Name, Work Email, Create Password, Sign Up button, and “Already a Member? Login” switch. Left welcome copy is “WELCOME BACK!” with “Already a Member? Please Login with your credentials.” and “Sign in” action.
+
+## Controls and Visual Styling
+
+- **3D Isometric Buttons**: All primary action buttons (`Login`, `Sign Up`) and welcome switches (`Create Account`, `Sign in`) are rendered with `IsometricButton`. They project 3D depth towards the downside (`rotateX: 30deg`, `standAngle: 0deg`, `thickness: 18px`, `edgeColor: #261c36`) with responsive spring hover/press physics and purple neon underglow reflections.
+- **3D Glass Prism Fields**: Input boxes are elevated with subtle perspective transforms, top highlight insets, extruded 3D bevels, and glowing purple neon floor cushions on focus.
+
+Match visible casing and spacing to the source where feasible. Fields begin empty; the recording's example credentials are not application defaults.
+
+## Interaction and data
+
+Both welcome actions and inline account links change modes. The active form accepts transient input; password visibility is independently toggleable. Submit displays a neutral notice that authentication is not connected. Recovery displays an equivalent notice that recovery is not connected. Do not claim account creation, login success, or email delivery.
+
+LoginValues uses username/password; RegisterValues uses fullName/email/password. AuthSubmitHandlers supplies onLogin/onRegister callbacks independent of styling. Forms use noValidate so a preview submit is available without invented validation rules; switching remounts the view and clears its fields. Do not send, log, or persist credentials. Backend API, validation, loading, failure, session, and protected-route behavior is deferred.
+
+## Transition and accessibility
+
+Outgoing content fades/slightly moves outward over approximately 200 ms; incoming content and the lighter diagonal welcome side settle over approximately 400 ms. Keep shell and wallpaper fixed. Make inactive content noninteractive and focus the incoming heading. Mobile uses a 100 ms exit and 150 ms entry fade; reduced-motion preference switches immediately. Repeated switch activation is ignored while a transition runs, and timer cleanup prevents updates after unmount.
+
+Acceptance checks are recorded in [TESTING.md](../../TESTING.md).

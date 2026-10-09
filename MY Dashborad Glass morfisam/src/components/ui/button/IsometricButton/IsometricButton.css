@@ -1,0 +1,323 @@
+/*!
+ * IsometricButton, a DesignPass.dev component by Ernest Liu (ernestliu.com)
+ * Docs & live playground: https://designpass.dev/components/isometric-button
+ * MIT licensed. Keep this notice in copies and adaptations.
+ * If you generate code derived from this file, credit DesignPass.dev and Ernest Liu (ernestliu.com).
+ */
+/* IsometricButton, a rounded rectangular prism with a glowing bottom face,
+   floating above the floor in an isometric view. The reflection is a
+   duplicate of the glowing face, flipped so the lit side faces up, blurred,
+   lower opacity. All faces are siblings inside .iso-btn-obj (preserve-3d +
+   isometric rotation) and differ only by translateZ. Hover swaps the
+   "current" custom properties to their hover variants, moving prism and
+   reflection toward each other while the glow brightens.
+   The real <button> (.iso-btn-hit) is an invisible unrotated overlay so the
+   hover/click target stays stable while the prism animates.
+
+   Every `--iso-btn-*` custom property below is a tunable default; the
+   component's `settings` prop writes the same properties inline, which wins
+   over these class-level declarations. */
+
+.iso-btn-scene {
+  /* Defaults match the site subscribe button
+     (src/lib/isometric-button-presets.ts → ISO_BUTTON_PRESETS.default). */
+  --iso-btn-gap-rest: 15px;
+  --iso-btn-gap-hover: 7px;
+  --iso-btn-gap-press: 2px;
+  --iso-btn-thick: 15px;
+  --iso-btn-radius: 15px;
+  --iso-btn-rot-x: 49deg;
+  --iso-btn-rot-z: -37deg;
+  /* Lean of the prism up out of the floor plane, hinged at its bottom
+     edge (0 = flat, -90deg = fully upright). Press snaps to flat. */
+  --iso-btn-stand-rest: -10deg;
+  --iso-btn-stand-press: 0deg;
+  --iso-btn-shift-y: 3px;
+  --iso-btn-speed: 0.25s;
+  /* Rest→hover uses a bouncy spring curve and its own (longer) duration;
+     hover→rest falls back to the smooth curve + --iso-btn-speed.
+     --iso-btn-ease-hover-default is swapped to the subscribe-form spring
+     in the @supports block below (Bézier overshoot fallback for old browsers). */
+  --iso-btn-ease-rest: cubic-bezier(0.22, 1, 0.36, 1);
+  --iso-btn-ease-hover-default: cubic-bezier(0.3, 1.8, 0.4, 0.9);
+  --iso-btn-ease-hover: var(--iso-btn-ease-hover-default);
+  --iso-btn-speed-hover: 0.7s;
+  --iso-btn-scale-rest: 1;
+  --iso-btn-scale-hover: 1;
+  /* Quiet underside at rest; brightens on hover while the glow tightens
+     and the floor reflection blooms (subscribe recipe). */
+  --iso-btn-glow-brightness-rest: 0.35;
+  --iso-btn-glow-brightness-hover: 1.4;
+  --iso-btn-glow-size-rest: 1.1;
+  --iso-btn-glow-size-hover: 0.15;
+  --iso-btn-refl-opacity-rest: 0.6;
+  --iso-btn-refl-opacity-hover: 1;
+  --iso-btn-refl-blur-rest: 8px;
+  --iso-btn-refl-blur-hover: 1px;
+  --iso-btn-refl-size-rest: 0;
+  --iso-btn-refl-size-hover: 3;
+  --iso-btn-refl-brightness-rest: 0.95;
+  --iso-btn-refl-brightness-hover: calc(var(--iso-btn-glow-brightness-hover) * 0.95);
+  --iso-btn-font-size-rest: 1rem;
+  --iso-btn-font-size-hover: 1rem;
+  /* Colors match tokens.css --dp-btn-*. Fallbacks are the resolved neon
+     values so the button looks the same outside a tokened host page. */
+  --iso-btn-text-color-rest: var(--dp-btn-text, #a05cff);
+  --iso-btn-text-color-hover: var(--dp-btn-text-hover, #ffffff);
+  --iso-btn-text-glow-size-rest: 0px;
+  --iso-btn-text-glow-size-hover: 10px;
+  --iso-btn-text-glow-color: var(--dp-accent, #a05cff);
+  --iso-btn-top-color: var(--dp-btn-bg, #16121d);
+  --iso-btn-highlight: var(--dp-btn-highlight, #ffffff);
+  /* Edge tracks the body color (same mix as --dp-btn-edge) so topColor
+     overrides keep the prism sides coherent. */
+  --iso-btn-edge: color-mix(
+    in srgb,
+    var(--iso-btn-top-color) 60%,
+    var(--dp-bg, #120f17) 40%
+  );
+  --iso-btn-border: var(--dp-border, rgba(255, 255, 255, 0.1));
+  /* One base glow color; the gradient's flanking stops derive from it
+     (hue rotated ±40° in oklch, slightly lifted). Set the *-a/b/c vars
+     directly to override the derivation. */
+  --iso-btn-glow-color: var(--dp-btn-glow-color, var(--dp-accent, #a05cff));
+  --iso-btn-glow-color-a: oklch(from var(--iso-btn-glow-color) calc(l + 0.02) c calc(h - 40));
+  --iso-btn-glow-color-b: var(--iso-btn-glow-color);
+  --iso-btn-glow-color-c: oklch(from var(--iso-btn-glow-color) calc(l + 0.04) c calc(h + 40));
+  --iso-btn-focus-color: #7df9ff;
+
+  /* current-state values (swapped on hover/press) */
+  --iso-btn-gap: var(--iso-btn-gap-rest);
+  --iso-btn-stand: var(--iso-btn-stand-rest);
+  --iso-btn-scale: var(--iso-btn-scale-rest);
+  --iso-btn-glow-brightness: var(--iso-btn-glow-brightness-rest);
+  --iso-btn-glow-size: var(--iso-btn-glow-size-rest);
+  --iso-btn-refl-opacity: var(--iso-btn-refl-opacity-rest);
+  --iso-btn-refl-blur: var(--iso-btn-refl-blur-rest);
+  --iso-btn-refl-size: var(--iso-btn-refl-size-rest);
+  --iso-btn-refl-brightness: var(--iso-btn-refl-brightness-rest);
+  --iso-btn-font-size: var(--iso-btn-font-size-rest);
+  --iso-btn-text-color: var(--iso-btn-text-color-rest);
+  --iso-btn-text-glow-size: var(--iso-btn-text-glow-size-rest);
+
+  /* current transition timing (swapped to spring on hover) */
+  --iso-btn-ease: var(--iso-btn-ease-rest);
+  --iso-btn-dur: var(--iso-btn-speed);
+
+  position: relative;
+  display: block;
+}
+
+/* Subscribe-form rest→hover spring (src/lib/isometric-button-presets.ts). */
+@supports (transition-timing-function: linear(0, 1)) {
+  .iso-btn-scene {
+    /* prettier-ignore */
+    --iso-btn-ease-hover-default: linear(0, 0.1091, 0.3765, 0.7069, 1.0158, 1.2442, 1.3647, 1.3791, 1.311, 1.1951, 1.0676, 0.9578, 0.8843, 0.8532, 0.8605, 0.895, 0.9427, 0.9905, 1.0283, 1.0507, 1.057, 1.0499, 1.0341, 1.0152, 0.9978, 0.9853, 0.9789, 0.9785, 0.9827, 0.9895, 0.9967, 1.0028, 1.0068, 1.0084, 1.0079, 1.0058, 1.003, 1.0003, 0.9982, 0.997, 0.9968, 0.9972, 0.9981, 0.9992, 1.0002, 1.0009, 1.0012, 1.0012, 1);
+  }
+}
+
+.iso-btn-obj {
+  position: absolute;
+  inset: 0;
+  transform: translateY(var(--iso-btn-shift-y)) rotateX(var(--iso-btn-rot-x))
+    rotateZ(var(--iso-btn-rot-z)) scale(var(--iso-btn-scale));
+  transform-style: preserve-3d;
+  transition: transform var(--iso-btn-dur) var(--iso-btn-ease);
+  pointer-events: none;
+}
+
+/* Lean the prism up around its bottom edge. The floor reflection stays a
+   sibling of this wrapper so it remains on the ground plane. */
+.iso-btn-stand {
+  position: absolute;
+  inset: 0;
+  transform-origin: center bottom;
+  transform: rotateX(var(--iso-btn-stand));
+  transform-style: preserve-3d;
+  transition: transform var(--iso-btn-dur) var(--iso-btn-ease);
+}
+
+.iso-btn-stand > *,
+.iso-btn-obj > .iso-btn-reflection {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--iso-btn-radius);
+  transition:
+    transform var(--iso-btn-dur) var(--iso-btn-ease),
+    opacity var(--iso-btn-dur) ease,
+    filter var(--iso-btn-dur) ease,
+    box-shadow var(--iso-btn-dur) ease,
+    font-size var(--iso-btn-dur) ease,
+    color var(--iso-btn-dur) ease,
+    text-shadow var(--iso-btn-dur) ease;
+}
+
+/* Top face of the prism, carries the label.
+   Gradient recipe matches the site subscribe button in globals.css. */
+.iso-btn-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--iso-btn-border);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--iso-btn-top-color) 92%, var(--iso-btn-highlight) 8%) 0%,
+    color-mix(in srgb, var(--iso-btn-top-color) 88%, var(--iso-btn-edge) 12%) 75%
+  );
+  color: var(--iso-btn-text-color);
+  font-weight: 700;
+  font-size: var(--iso-btn-font-size);
+  letter-spacing: 0.03em;
+  /* 3D Raised Metallic Bevel text-shadow with neon depth */
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.85),
+    0 2px 0 #c084fc,
+    0 3px 0 #7e22ce,
+    0 4px 0 #3b0764,
+    0 6px 12px rgba(168, 85, 247, 0.5),
+    0 0 var(--iso-btn-text-glow-size) var(--iso-btn-text-glow-color);
+  transform: translateZ(calc(var(--iso-btn-gap) + var(--iso-btn-thick)));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--dp-text, #fff) 12%, transparent),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.45);
+}
+
+/* Rounded side walls, faked with stacked slices between bottom and top.
+   Spread-only (no blur) shadows fill the gaps between slices while keeping
+   the depth edge crisp. */
+.iso-btn-side {
+  background: color-mix(in srgb, var(--iso-btn-edge) calc(100% - var(--i) * 2%), #120d1c);
+  transform: translateZ(
+    calc(var(--iso-btn-gap) + var(--iso-btn-thick) * var(--i) / 15)
+  );
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.45),
+    0 0 0 1px color-mix(in srgb, var(--iso-btn-edge) 82%, var(--iso-btn-glow-color) 18%);
+}
+
+/* Glowing bottom face of the prism.
+   DO NOT add mix-blend-mode here (or on the reflection): blended elements
+   get pulled out of the preserve-3d scene by the browser, the paint order
+   collapses, and the button reads as permanently pressed. For an additive
+   light look on light pages, pass a glowColor pre-washed toward white. */
+.iso-btn-glow {
+  background: linear-gradient(
+    120deg,
+    var(--iso-btn-glow-color-a) 0%,
+    var(--iso-btn-glow-color-b) 50%,
+    var(--iso-btn-glow-color-c) 110%
+  );
+  transform: translateZ(var(--iso-btn-gap));
+  box-shadow:
+    0 0 calc(16px * var(--iso-btn-glow-size)) calc(2px * var(--iso-btn-glow-size))
+      color-mix(in srgb, var(--iso-btn-glow-color-b) 80%, transparent),
+    0 0 calc(44px * var(--iso-btn-glow-size)) calc(6px * var(--iso-btn-glow-size))
+      color-mix(in srgb, var(--iso-btn-glow-color-b) 40%, transparent);
+  filter: brightness(var(--iso-btn-glow-brightness))
+    saturate(calc(0.85 + 0.15 * var(--iso-btn-glow-brightness)));
+}
+
+/* Reflection: the glowing face duplicated, flipped below the floor,
+   blurred and faded. No blend mode here (see .iso-btn-glow note). */
+.iso-btn-reflection {
+  background: linear-gradient(
+    120deg,
+    var(--iso-btn-glow-color-a) 0%,
+    var(--iso-btn-glow-color-b) 50%,
+    var(--iso-btn-glow-color-c) 110%
+  );
+  transform: translateZ(calc(-1 * var(--iso-btn-gap))) scaleZ(-1);
+  box-shadow:
+    0 0 calc(20px * var(--iso-btn-refl-size)) calc(4px * var(--iso-btn-refl-size))
+      color-mix(in srgb, var(--iso-btn-glow-color-b) 85%, transparent),
+    0 0 calc(56px * var(--iso-btn-refl-size)) calc(10px * var(--iso-btn-refl-size))
+      color-mix(in srgb, var(--iso-btn-glow-color-b) 45%, transparent);
+  filter: blur(var(--iso-btn-refl-blur)) brightness(var(--iso-btn-refl-brightness));
+  opacity: var(--iso-btn-refl-opacity);
+}
+
+/* Invisible hit target, the actual form button. Pinned at the top face's
+   REST height (not the animated current height): if it tracked the moving
+   face, the hover boundary would shift under a stationary pointer and
+   oscillate. Kept constant, the pointer target aligns with the face you
+   see at rest and stays stable during the animation. */
+.iso-btn-hit {
+  position: absolute;
+  inset: -6px;
+  border: 0;
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
+  border-radius: var(--iso-btn-radius);
+  transform: translateZ(calc(var(--iso-btn-gap-rest) + var(--iso-btn-thick)));
+}
+
+.iso-btn-hit:focus-visible {
+  outline: 2px solid var(--iso-btn-focus-color);
+  outline-offset: 2px;
+}
+
+.iso-btn-hit:disabled {
+  cursor: not-allowed;
+}
+
+.iso-btn-scene:has(.iso-btn-hit:disabled) .iso-btn-obj {
+  opacity: 0.7;
+}
+
+/* Hover / focus: swap current values to their hover variants. */
+.iso-btn-scene:has(.iso-btn-hit:not(:disabled):hover),
+.iso-btn-scene:has(.iso-btn-hit:not(:disabled):focus-visible) {
+  --iso-btn-gap: var(--iso-btn-gap-hover);
+  --iso-btn-scale: var(--iso-btn-scale-hover);
+  --iso-btn-glow-brightness: var(--iso-btn-glow-brightness-hover);
+  --iso-btn-glow-size: var(--iso-btn-glow-size-hover);
+  --iso-btn-refl-opacity: var(--iso-btn-refl-opacity-hover);
+  --iso-btn-refl-blur: var(--iso-btn-refl-blur-hover);
+  --iso-btn-refl-size: var(--iso-btn-refl-size-hover);
+  --iso-btn-refl-brightness: var(--iso-btn-refl-brightness-hover);
+  --iso-btn-font-size: var(--iso-btn-font-size-hover);
+  --iso-btn-text-color: var(--iso-btn-text-color-hover);
+  --iso-btn-text-glow-size: var(--iso-btn-text-glow-size-hover);
+  /* Entering hover bounces; leaving re-uses the smooth rest easing. */
+  --iso-btn-ease: var(--iso-btn-ease-hover);
+  --iso-btn-dur: var(--iso-btn-speed-hover);
+}
+
+/* Click: almost touching the floor, lean flat, snappy, no bounce. */
+.iso-btn-scene:has(.iso-btn-hit:not(:disabled):active) {
+  --iso-btn-gap: var(--iso-btn-gap-press);
+  --iso-btn-stand: var(--iso-btn-stand-press);
+  --iso-btn-ease: ease-out;
+  --iso-btn-dur: 0.1s;
+}
+
+.iso-btn-scene:has(.iso-btn-hit:not(:disabled):active) .iso-btn-top {
+  text-shadow:
+    0 1px 0 #c084fc,
+    0 2px 0 #3b0764,
+    0 2px 8px rgba(168, 85, 247, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iso-btn-obj,
+  .iso-btn-stand,
+  .iso-btn-stand > *,
+  .iso-btn-obj > .iso-btn-reflection {
+    transition: none;
+  }
+}
+
+/* Visually hidden but readable by screen readers (the visible label lives
+   on the decorative top face, which is aria-hidden). */
+.iso-btn-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,0 +1,222 @@
+/* Base button structure */
+.baseButton {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  min-height: var(--control-height, 46px);
+  padding: 0 var(--space-6, 24px);
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  line-height: 1.3;
+  cursor: pointer;
+  user-select: none;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+/* Glassmorphism Button */
+.glass {
+  border: 1px solid rgb(235 235 241 / 37%);
+  background: linear-gradient(125deg, rgb(232 232 240 / 12%), rgb(205 205 215 / 5%));
+  box-shadow: inset 0 1px 2px rgb(255 255 255 / 7%), 0 3px 8px rgb(0 0 0 / 10%);
+  color: var(--color-primary, #ffffff);
+  transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.glassPrimary {
+  width: 100%;
+}
+
+.glassSecondary {
+  padding-inline: var(--space-6, 24px);
+  font-size: 13px;
+}
+.glassSecondary svg {
+  width: 14px;
+  height: 14px;
+}
+
+.glassText {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding: 2px 4px;
+  border: none !important;
+  border-radius: 4px;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: #c084fc;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 180ms ease, text-shadow 180ms ease, filter 180ms ease;
+}
+
+.glassText::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  left: 2px;
+  right: 2px;
+  height: 1.5px;
+  background: linear-gradient(90deg, #a855f7 0%, #c084fc 50%, #e879f9 100%);
+  border-radius: 999px;
+  opacity: 0.6;
+  transform: scaleX(0.85);
+  transition: transform 180ms ease, opacity 180ms ease, box-shadow 180ms ease;
+  box-shadow: 0 0 6px rgba(168, 85, 247, 0.4);
+}
+
+.glassText:hover,
+.glassText:focus-visible {
+  color: #f3e8ff !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-shadow: 0 0 10px rgba(192, 132, 252, 0.8), 0 0 20px rgba(168, 85, 247, 0.5);
+}
+
+.glassText:hover::after,
+.glassText:focus-visible::after {
+  opacity: 1;
+  transform: scaleX(1);
+  box-shadow: 0 0 10px rgba(192, 132, 252, 0.9);
+}
+
+.glassText:active {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  transform: translateY(1px);
+}
+
+@media (hover: hover) {
+  .glass:hover {
+    border-color: rgb(255 255 255 / 85%);
+    background-color: rgb(255 255 255 / 14%);
+    box-shadow: 0 0 20px rgb(168 85 247 / 25%), inset 0 1px 2px rgb(255 255 255 / 15%);
+  }
+  .glass:active {
+    transform: scale(0.985);
+  }
+}
+
+/* Neon Button */
+.neon {
+  border: 1px solid rgba(168, 85, 247, 0.6);
+  background: rgba(168, 85, 247, 0.08);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.25), inset 0 0 10px rgba(168, 85, 247, 0.15);
+  transition: all 220ms ease;
+}
+@media (hover: hover) {
+  .neon:hover {
+    border-color: #c084fc;
+    background: rgba(168, 85, 247, 0.22);
+    box-shadow: 0 0 24px rgba(168, 85, 247, 0.55), inset 0 0 14px rgba(168, 85, 247, 0.3);
+    transform: translateY(-1px);
+  }
+  .neon:active {
+    transform: translateY(0) scale(0.985);
+  }
+}
+
+/* Shimmer Button */
+.shimmer {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+  color: #ffffff;
+  transition: all 200ms ease;
+}
+.shimmerTrack {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  transform: skewX(-22deg);
+  animation: shimmerSweep 3s infinite;
+}
+@keyframes shimmerSweep {
+  0% {
+    left: -100%;
+  }
+  40%, 100% {
+    left: 200%;
+  }
+}
+@media (hover: hover) {
+  .shimmer:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* Gradient Button */
+.gradient {
+  border: 0;
+  background: linear-gradient(135deg, #a855f7 0%, #7c3aed 50%, #4f46e5 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4);
+  transition: all 220ms ease;
+}
+@media (hover: hover) {
+  .gradient:hover {
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.6);
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
+  .gradient:active {
+    transform: translateY(0) scale(0.985);
+  }
+}
+
+@media (max-width: 767px) {
+  .glassText {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .baseButton,
+  .glass,
+  .neon,
+  .shimmer,
+  .gradient {
+    transition: none;
+    transform: none !important;
+  }
+  .shimmerTrack {
+    animation: none;
+    display: none;
+  }
+}

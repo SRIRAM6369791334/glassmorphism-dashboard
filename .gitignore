@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Local databases and binaries
+.local/
+**/.local/
+
+# Environment files and credentials
+.env
+**/.env
+.env.local
+.env.*.local
+!**/.env.example
+
+# Production builds
+dist/
+**/dist/
+build/
+**/build/
+
+# Test output and reports
+test-results/
+**/test-results/
+playwright-report/
+**/playwright-report/
+coverage/
+**/coverage/
+artifacts/test-build/
+**/artifacts/test-build/
+artifacts/preview/test-results/
+**/artifacts/preview/test-results/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript cache
+*.tsbuildinfo
+
+# OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE & Editor caches
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
